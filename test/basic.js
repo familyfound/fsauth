@@ -1,6 +1,6 @@
 
 var vars = {
-  host: process.env.HOST || 'localhost:3000',
+  host: process.env.HOST || 'http://localhost:3000',
   check_login_path: process.env.CHECK_LOGIN_PATH || '/oauth/check-login',
   callback_path: process.env.CALLBACK_PATH || '/oauth/callback',
   key: process.env.KEY,
