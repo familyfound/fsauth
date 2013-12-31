@@ -11,8 +11,8 @@ function showDialog(url, modal) {
   return node
 }
 
-module.exports = function (url, next) {
-  request.get('/oauth/check-login', function (err, res) {
+module.exports = function (check_url, next) {
+  request.get(check_url, function (err, res) {
     if (err) return next(err);
     if (res.body.error) return next(res.body.error);
     if (res.body.authorized) return next(null, res.body.data);
