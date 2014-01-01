@@ -1,9 +1,14 @@
 
 var express = require('express')
 
-module.exports = function (host, check_login_path, callback_path, key, secret, api_base) {
+module.exports = function (host, check_login_path, callback_path, key, api_base) {
   var fsauth = require('../server')(host)
     , app = express()
+
+  app.use(express.bodyParser());
+  app.use(express.methodOverride());
+  app.use(express.cookieParser('somethingsecretthiswaycomes'));
+  app.use(express.session());
 
   app.get('/env.js', function (req, res) {
     res.set('Content-type', 'application/javascript')
@@ -11,7 +16,7 @@ module.exports = function (host, check_login_path, callback_path, key, secret, a
   })
   app.use(express.static(__dirname + '/static'))
 
-  fsauth.addRoutes(app, check_login_path, callback_path, key, secret, api_base)
+  fsauth.addRoutes(app, check_login_path, callback_path, key, api_base)
 
   app.listen(3000, function () {
     console.log('listening')
