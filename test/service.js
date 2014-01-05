@@ -14,7 +14,7 @@ module.exports = function (host, check_login_path, callback_path, key, api_base)
     res.set('Content-type', 'application/javascript')
     res.send('window.check_url = "' + check_login_path + '";')
   })
-  app.use(express.static(__dirname + '/static'))
+  app.use(express.static(__dirname))
 
   fsauth.addRoutes(app, check_login_path, callback_path, key, api_base)
 

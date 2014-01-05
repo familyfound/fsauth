@@ -14,16 +14,19 @@ function showDialog(url, modal) {
 module.exports = function (check_url, next) {
   request.get(check_url, function (err, res) {
     if (err) return next(err);
-    if (res.body.error) return next(res.body.error);
-    if (res.body.authorized) return next(null, res.body.data);
+    if (res.status >= 300 || res.status < 200) {
+      return next(res.text)
+    }
+    if (res.status == 200) {
+      return next(null, res.body);
+    }
     var dialog;
-    window.authCallback = function (res) {
+    window.authCallback = function (err, data) {
       dialog.parentNode.removeChild(dialog)
-      if (res.err) return next(res.err);
-      if (!res.authorized) return next('Unauthorized');
-      return next(null, res.data);
+      if (err) return next(err);
+      return next(null, data);
     };
-    dialog = showDialog(res.body.url);
+    dialog = showDialog(res.header['oauth-authorize-url']);
   });
 }
 

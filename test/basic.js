@@ -4,7 +4,6 @@ var vars = {
   check_login_path: process.env.CHECK_LOGIN_PATH || '/oauth/check-login',
   callback_path: process.env.CALLBACK_PATH || '/oauth/callback',
   key: process.env.KEY,
-  secret: process.env.SECRET,
   api_base: null
 }
 
