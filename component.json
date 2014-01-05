@@ -1,0 +1,17 @@
+{
+  "name": "fsauth",
+  "repo": "notablemind/fsauth",
+  "description": "FamilySearch Oauth module",
+  "version": "0.0.1",
+  "keywords": [],
+  "dependencies": {
+    "visionmedia/superagent": "*"
+  },
+  "development": {},
+  "license": "MIT",
+  "main": "client.js",
+  "scripts": [
+    "client.js"
+  ],
+  "remotes": []
+}
