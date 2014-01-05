@@ -1,5 +1,5 @@
 
-build: components index.js
+build: components client.js
 	@component build --dev -o test -n build
 
 components: component.json
