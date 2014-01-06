@@ -11,22 +11,28 @@ function showDialog(url, modal) {
   return node
 }
 
-module.exports = function (check_url, next) {
+module.exports = function (check_url, onUrl, onData) {
   request.get(check_url, function (err, res) {
     if (err) return next(err);
     if (res.status >= 300 || res.status < 200) {
-      return next(res.text)
+      return onUrl(res.text)
     }
     if (res.status == 200) {
-      return next(null, res.body);
+      return onData(null, res.body);
     }
     var dialog;
-    window.authCallback = function (err, data) {
-      dialog.parentNode.removeChild(dialog)
-      if (err) return next(err);
-      return next(null, data);
-    };
-    dialog = showDialog(res.header['oauth-authorize-url']);
+    window.authCallback = onData;
+    onUrl(null, res.header['oauth-authorize-url']);
   });
+}
+
+module.exports.modal = function (check_url, next) {
+  module.exports(check_url, function (err, url) {
+    if (err) return next(err)
+    showDialog(url)
+  }, function (err, token, data) {
+    dialog.parentNode.removeChild(dialog)
+    next(err, token, data)
+  })
 }
 
