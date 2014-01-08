@@ -2,7 +2,7 @@
   "name": "fsauth",
   "version": "0.0.0",
   "description": "FamilySearch Oauth module",
-  "main": "index.js",
+  "main": "server.js",
   "directories": {
     "test": "test"
   },

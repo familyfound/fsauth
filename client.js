@@ -13,12 +13,12 @@ function showDialog(url, modal) {
 
 module.exports = function (check_url, onUrl, onData) {
   request.get(check_url, function (err, res) {
-    if (err) return next(err);
+    if (err) return onUrl(err);
     if (res.status >= 300 || res.status < 200) {
       return onUrl(res.text)
     }
     if (res.status == 200) {
-      return onData(null, res.body);
+      return onData(null, res.header['oauth-access-token'], res.body);
     }
     var dialog;
     window.authCallback = onData;
