@@ -10,7 +10,7 @@
     "debug": "~0.7.4",
     "express": "~3.4.7",
     "familysearch": "~0.0.5",
-    "oauth": "git://github.com/jabapyth/node-oauth.git"
+    "oauth": "git://github.com/jaredly/node-oauth.git"
   },
   "devDependencies": {
     "express": "~3.4.7"
