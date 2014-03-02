@@ -1,6 +1,6 @@
 {
   "name": "fsauth",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "FamilySearch Oauth module",
   "main": "server.js",
   "directories": {
