@@ -6,9 +6,9 @@ var request = require('superagent')
 module.exports = function (check_url, code_url, done) {
 
   request.get(check_url, function (err, res) {
-    if (err) return onUrl(err);
+    if (err) return done(err);
     if (res.status >= 300 || res.status < 200) {
-      return onUrl(res.text)
+      return done(res.text)
     }
     if (res.status == 200) {
       return done(null, res.header['oauth-access-token'], res.body);
