@@ -1,6 +1,6 @@
 {
   "name": "fsauth",
-  "version": "0.1.0",
+  "version": "0.2.2",
   "description": "FamilySearch Oauth module",
   "main": "server.js",
   "directories": {
@@ -9,7 +9,7 @@
   "dependencies": {
     "debug": "~0.7.4",
     "express": "~3.4.7",
-    "familysearch": "~0.0.5",
+    "familysearch": "git+https://github.com/familyfound/familysearch#1.1.0",
     "oauth": "git://github.com/jaredly/node-oauth.git",
     "superagent": "^0.21.0"
   },
