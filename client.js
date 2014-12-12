@@ -14,24 +14,71 @@ module.exports = function (check_url, code_url, done) {
       return done(null, res.header['oauth-access-token'], res.body);
     }
 
-    var created = window.open(res.header['oauth-authorize-url'], 'FamilySearch Auth', 'width=400,height=600')
+    modal(function () {
 
-    waitForWindow(created, function (err) {
-      if (err) return done(err)
-      var search = params(created.location.search.slice(1))
-      request.post(code_url)
-        .query({'code': search.code})
-        .end(function (err, res) {
-          if (err) return done(err)
-          created.close()
-          done(null, res.header['oauth-access-token'], res.body)
-        })
+      var created = window.open(res.header['oauth-authorize-url'], 'FamilySearch Auth', 'width=400,height=600')
+
+      waitForWindow(created, function (err) {
+        if (err) return done(err)
+        var search = params(created.location.search.slice(1))
+        request.post(code_url)
+          .query({'code': search.code})
+          .end(function (err, res) {
+            if (err) return done(err)
+            created.close()
+            done(null, res.header['oauth-access-token'], res.body)
+          })
+      })
     })
   });
 
 }
 
-module.exports.modal = function (check_url, next) {
+var Modal = React.createClass({
+  render: function () {
+    return React.DOM.div({
+        style: {
+          position: 'fixed',
+          backgroundColor: 'white',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+        }
+      },
+      React.DOM.button({
+        onClick: this.props.action,
+        style: {
+          margin: '100px auto',
+          backgroundColor: '#5C64FF',
+          border: '1px solid #ccc',
+          borderRadius: '10px',
+          fontSize: '25px',
+          fontWeight: 'bold',
+          padding: '10px 20px',
+          backgroundImage: 'linear-gradient(to bottom, rgb(16, 62, 247), rgb(37, 47, 115))',
+          color: 'rgb(234, 227, 255)',
+          display: 'block',
+        }
+      }, this.props.title)
+    )
+  }
+})
+
+function modal(done) {
+  var node = document.createElement('div')
+  document.body.appendChild(node)
+  React.renderComponent(Modal({
+    title: 'Login with FamilySearch',
+    action: function () {
+      node.parentNode.removeChild(node)
+      done()
+    },
+  }), node)
+}
+
+/*
+var modal = module.exports.modal = function (check_url, next) {
   module.exports(check_url, function (err, url) {
     if (err) return next(err)
     showDialog(url)
@@ -48,6 +95,7 @@ function showDialog(url, modal) {
   document.body.appendChild(node)
   return node
 }
+*/
 
 
 /**
