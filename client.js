@@ -53,22 +53,23 @@ function showDialog(url, modal) {
 /**
  * Expect an external window to be done sometime soon
  */
-function waitForWindow(window, initial, step, done) {
+function waitForWindow(child, initial, step, done) {
   if (arguments.length === 2) {
     done = initial
     initial = 500
     step = 100
   }
   waitFor(initial, step, function () {
-    if (window.closed) {
+    if (child.closed) {
       done(new Error('User aborder auth'))
       return true
     }
     try {
-      var m = window.location.search;
+      var m = child.location.search;
     } catch (e) {
       return false
     }
+    if (child.location.origin !== this.location.origin) return false
     done()
     return true
   })
